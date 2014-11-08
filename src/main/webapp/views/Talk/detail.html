@@ -1,0 +1,51 @@
+<header ng-switch on="$location.path().indexOf('/Talks/new') > -1">
+    <h3 ng-switch-when="true">Create a new Talk</h3>
+    <h3 ng-switch-when="false">View or edit Talk</h3>
+</header>
+<form id="TalkForm" name="TalkForm" class="form-horizontal" role="form">
+    <div ng-show="displayError" class="alert alert-danger">
+        <strong>Error!</strong> Something broke. Retry, or cancel and start afresh.
+    </div>
+    
+
+    <div class="form-group" ng-class="{'has-error': TalkForm.title.$invalid}">
+        <label for="title" class="col-sm-2 control-label">Title</label>
+        <div id="titleControls" class="col-sm-10">
+            <input id="title" name="title" type="text" required class="form-control" ng-model="talk.title" placeholder="Enter the Talk Title"></input>
+            <span class="help-block error" ng-show="TalkForm.title.$error.required">required</span> 
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': TalkForm.description.$invalid}">
+        <label for="description" class="col-sm-2 control-label">Description</label>
+        <div id="descriptionControls" class="col-sm-10">
+            <input id="description" name="description" type="text" ng-maxlength="2000" class="form-control" ng-model="talk.description" placeholder="Enter the Talk Description"></input>
+            <span class="help-block error" ng-show="TalkForm.description.$error.maxlength">maximum length is 2000</span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': TalkForm.room.$invalid}">
+        <label for="room" class="col-sm-2 control-label">Room</label>
+        <div id="roomControls" class="col-sm-10">
+            <input id="room" name="room" type="text" required class="form-control" ng-model="talk.room" placeholder="Enter the Talk Room"></input>
+            <span class="help-block error" ng-show="TalkForm.room.$error.required">required</span> 
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': TalkForm.date.$invalid}">
+        <label for="date" class="col-sm-2 control-label">Date</label>
+        <div id="dateControls" class="col-sm-10">
+            <date id="date" name="date" ng-model="talk.date" placeholder="Enter the Talk Date"></date>
+            <span class="help-block error" ng-show="TalkForm.date.$error.dateFormat">does not match format "yyyy-MM-dd" (e.g. 2013-12-01)</span>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button id="saveTalk" name="saveTalk" class="btn btn-primary" ng-disabled="isClean() || TalkForm.$invalid" ng-click="save()"><span class="glyphicon glyphicon-ok-sign"></span> Save</button>
+            <button id="cancel" name="cancel" class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove-sign"></span> Cancel</button>
+            <button id="deleteTalk" name="deleteTalk" class="btn btn-danger" ng-show="talk.id" ng-click="remove()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+        </div>
+    </div>
+</form>

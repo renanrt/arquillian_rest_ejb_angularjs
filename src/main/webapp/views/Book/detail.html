@@ -1,0 +1,89 @@
+<header ng-switch on="$location.path().indexOf('/Books/new') > -1">
+    <h3 ng-switch-when="true">Create a new Book</h3>
+    <h3 ng-switch-when="false">View or edit Book</h3>
+</header>
+<form id="BookForm" name="BookForm" class="form-horizontal" role="form">
+    <div ng-show="displayError" class="alert alert-danger">
+        <strong>Error!</strong> Something broke. Retry, or cancel and start afresh.
+    </div>
+    
+
+    <div class="form-group" ng-class="{'has-error': BookForm.isbn.$invalid}">
+        <label for="isbn" class="col-sm-2 control-label">Isbn</label>
+        <div id="isbnControls" class="col-sm-10">
+            <input id="isbn" name="isbn" type="text" class="form-control" ng-model="book.isbn" placeholder="Enter the Book Isbn"></input>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': BookForm.title.$invalid}">
+        <label for="title" class="col-sm-2 control-label">Title</label>
+        <div id="titleControls" class="col-sm-10">
+            <input id="title" name="title" type="text" class="form-control" ng-model="book.title" placeholder="Enter the Book Title"></input>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': BookForm.author.$invalid}">
+        <label for="author" class="col-sm-2 control-label">Author</label>
+        <div id="authorControls" class="col-sm-10">
+            <input id="author" name="author" type="text" class="form-control" ng-model="book.author" placeholder="Enter the Book Author"></input>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': BookForm.description.$invalid}">
+        <label for="description" class="col-sm-2 control-label">Description</label>
+        <div id="descriptionControls" class="col-sm-10">
+            <input id="description" name="description" type="text" ng-maxlength="2000" class="form-control" ng-model="book.description" placeholder="Enter the Book Description"></input>
+            <span class="help-block error" ng-show="BookForm.description.$error.maxlength">maximum length is 2000</span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': BookForm.price.$invalid}">
+        <label for="price" class="col-sm-2 control-label">Price</label>
+        <div id="priceControls" class="col-sm-10">
+            <input id="price" name="price" type="number" class="form-control" ng-model="book.price" placeholder="Enter the Book Price"></input>
+            <span class="help-block error" ng-show="BookForm.price.$error.number">not a number</span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': BookForm.nbOfPages.$invalid}">
+        <label for="nbOfPages" class="col-sm-2 control-label">Nb Of Pages</label>
+        <div id="nbOfPagesControls" class="col-sm-10">
+            <input id="nbOfPages" name="nbOfPages" type="number" class="form-control" ng-model="book.nbOfPages" placeholder="Enter the Book Nb Of Pages"></input>
+            <span class="help-block error" ng-show="BookForm.nbOfPages.$error.number">not a number</span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': BookForm.publicationDate.$invalid}">
+        <label for="publicationDate" class="col-sm-2 control-label">Publication Date</label>
+        <div id="publicationDateControls" class="col-sm-10">
+            <input id="publicationDate" name="publicationDate" type="text" class="form-control" ng-model="book.publicationDate" placeholder="Enter the Book Publication Date"></input>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': BookForm.language.$invalid}">
+        <label for="language" class="col-sm-2 control-label">Language</label>
+        <div id="languageControls" class="col-sm-10">
+        <select id="language" name="language" class="form-control" ng-model="book.language" ng-options="l for l in languageList"  >
+            <option value="">Choose a Language</option>
+        </select>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': BookForm.speakers.$invalid}">
+        <label for="speakers" class="col-sm-2 control-label">Speakers</label>
+        <div id="speakersControls" class="col-sm-10">
+            <select id="speakers" name="speakers" multiple class="form-control" ng-model="speakersSelection" ng-options="s.text for s in speakersSelectionList">
+                <option value="">Choose a Speakers</option>
+            </select>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button id="saveBook" name="saveBook" class="btn btn-primary" ng-disabled="isClean() || BookForm.$invalid" ng-click="save()"><span class="glyphicon glyphicon-ok-sign"></span> Save</button>
+            <button id="cancel" name="cancel" class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove-sign"></span> Cancel</button>
+            <button id="deleteBook" name="deleteBook" class="btn btn-danger" ng-show="book.id" ng-click="remove()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+        </div>
+    </div>
+</form>
